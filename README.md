@@ -143,10 +143,10 @@ flutter run
 
 ##  Project Team
 
-- **Abraham Jeyakumar** – NSS22EC011  
-- **Aravind Sunil** – NSS22EC039  
-- **Jostin Jaison** – NSS22EC059  
-- **Keerthana N** – NSS22EC064
+- **Abraham Jeyakumar** 
+- **Aravind Sunil** 
+- **Jostin Jaison**  
+- **Keerthana N** 
 
 **Guide**: Prof. Sindhu Krishnan  
 **Department**: Electronics and Communication Engineering  
