@@ -4,10 +4,6 @@ This repository contains the design and implementation of a low-cost, wearable h
 
 ---
 
-## Repository Structure
-
-
----
 
 ## System Overview
 
