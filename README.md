@@ -128,7 +128,7 @@ The use of off-the-shelf components and open-source platforms ensures that the g
 ```bash
 flutter pub get
 flutter run
-
+```
 
 ##  References
 
@@ -152,13 +152,6 @@ flutter run
 **Department**: Electronics and Communication Engineering  
 **Institution**: NSS College of Engineering, Palakkad  
 **University**: APJ Abdul Kalam Technological University
-
----
-
-##  Final Report
-
-For complete technical details, refer to:  
-[`Documents/project.pdf`](Documents/project.pdf)
 
 ---
 
