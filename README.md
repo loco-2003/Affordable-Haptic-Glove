@@ -128,3 +128,41 @@ The use of off-the-shelf components and open-source platforms ensures that the g
 ```bash
 flutter pub get
 flutter run
+
+
+##  References
+
+- Dahiya, R. S., Valle, M. (2012). *Robotic Tactile Sensing: Technologies and Systems*. Springer.
+- He, J., et al. (2017). *Haptic feedback for rehabilitation and motor learning*. JNER.
+- Lane, J. C., et al. (2018). *Design and evaluation of a low-cost glove for stroke rehabilitation*. IEEE Transactions.
+- Espressif Systems. *ESP32 Technical Reference Manual*.
+- TensorFlow Lite for Microcontrollers. https://www.tensorflow.org/lite/microcontrollers
+- Additional research from IEEE Xplore, Springer, and MDPI.
+
+---
+
+##  Project Team
+
+- **Abraham Jeyakumar** – NSS22EC011  
+- **Aravind Sunil** – NSS22EC039  
+- **Jostin Jaison** – NSS22EC059  
+- **Keerthana N** – NSS22EC064
+
+**Guide**: Prof. Sindhu Krishnan  
+**Department**: Electronics and Communication Engineering  
+**Institution**: NSS College of Engineering, Palakkad  
+**University**: APJ Abdul Kalam Technological University
+
+---
+
+##  Final Report
+
+For complete technical details, refer to:  
+[`Documents/project.pdf`](Documents/project.pdf)
+
+---
+
+##  License
+
+This project is intended for educational and academic use. Please credit the original authors when adapting or reusing any part of this work.
+
