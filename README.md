@@ -24,41 +24,29 @@ This repository details a low-cost, wearable haptic glove system using ESP32, fl
 
 ---
 
-## Software Architecture
 
-- **ESP32 Firmware**: Arduino IDE; reads sensors, sends data via WebSocket, drives motors.
-- **Flutter App**: Connects to glove, runs reaction game, logs and visualizes data for progress tracking (Hive database).
+## Software Architecture & Benefits
 
----
+### ESP32 Firmware
+- Arduino-based; reads flex sensors, sends data & controls vibration motors via WebSocket.
 
-## Communication Protocol
+### Flutter App
+- Connects to ESP32 over Wi-Fi.
+- Runs finger reaction game, logs movements, reaction times, and sessions.
+- Shows progress with graphs and stats (Hive database).
 
-- **WebSockets**: Enables low-latency, two-way data exchange between ESP32 and app for real-time feedback.
+### Communication
+- WebSocket ensures real-time, low-latency, reliable data exchange.
 
----
+### Game & Tracking
+- Players respond to finger cues; game actions vibrate the finger.
+- Logs accuracy, reaction times, and session stats.
+- Progress graphs help therapists track recovery.
 
-## Game and Therapy
-
-- Falling blocks in-app prompt specific finger movements.
-- Correct actions vibrate the relevant finger.
-- Logs accuracy and reaction time for recovery analysis.
-
----
-
-## Data & Tracking
-
-- Session stats and reaction times stored locally.
-- Progress graphs per finger.
-- Supports therapist review and adjustment.
-
----
-
-## Benefits
-
-- Affordable, home-friendly rehab.
-- Real-time, tactile feedback.
-- Open-source and modular.
-- Quantitative tracking for therapists.
+### Patient Benefits
+- Fun, interactive rehab at home.
+- Instant tactile feedback.
+- Open-source, affordable, and data-driven progress tracking.
 
 ---
 
