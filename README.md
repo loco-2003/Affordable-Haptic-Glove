@@ -15,7 +15,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 - **ESP32-WROOM-32 (Arduino)** – Dual-core MCU with integrated TCP/IP stack, ADC (12-bit), and PWM timers.
 - **Flex Sensors** – Variable resistors modeled as voltage dividers for finger-angle estimation.
 - **Vibration Motors (ERM)** – PWM-driven via NPN transistor switches; feedback for motor cortex activation.
-- **2N2222/BC547 + Flyback Diodes** – Ensure safe inductive switching under motor load.
+- **2N2222/BC547 + Diodes** – Ensure safe inductive switching under motor load.
 - **LM2596 Buck Converter** – Regulates 9V input down to 3.3V logic-compatible rails.
 - **9V Battery/USB** – Mobile power for untethered use.
 
