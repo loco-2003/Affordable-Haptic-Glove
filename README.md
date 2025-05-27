@@ -1,156 +1,129 @@
 # Affordable Haptic Glove for Stroke Rehabilitation
 
-This repository details a low-cost, wearable haptic glove system using ESP32, flex sensors, vibration motors, and a Flutter-based game interface. Designed for stroke rehabilitation, it encourages therapeutic finger movements through interactive gameplay.
+This repository presents a cost-efficient, wearable neurorehabilitation system integrating **ESP32 (Xtensa LX6 dual-core SoC)**, **flex resistive sensors**, **ERM vibration actuators**, and a **Flutter (Dart) UI layer**. The glove supports **gesture-based therapy** using embedded sensing, real-time haptics, and edge-device analytics for post-stroke hand function recovery.
 
 ---
 
-## System Overview
+## 🧠 System Architecture
 
-The haptic glove is designed to detect finger movements using flex sensors and provide real-time haptic feedback using vibration motors. The ESP32 microcontroller collects sensor data and communicates with a mobile application over Wi-Fi using WebSockets. The mobile application presents a game-based interface to motivate consistent therapy and monitor patient progress.
-
----
-
-## Hardware Components
-
-### 1. ESP32 Microcontroller
-- Dual-core microcontroller with built-in Wi-Fi and Bluetooth.
-- Acts as the central unit for processing flex sensor input and controlling vibration feedback.
-- Enables wireless communication with the mobile application.
-
-### 2. Flex Sensors
-- Placed on fingers to detect bending movements.
-- Output is an analog signal proportional to the bending angle.
-- Data is digitized using the ESP32's ADC channels.
-
-### 3. Vibration Motors
-- Provide haptic feedback corresponding to user actions.
-- Controlled via digital output pins using transistors for switching.
-
-### 4. Transistors and Diodes
-- Transistors act as electronic switches to control motors.
-- Diodes protect the circuit from voltage spikes (back EMF).
-
-### 5. Buck Converter
-- Reduces the battery voltage to a level safe for the ESP32 and other components.
-
-### 6. Power Supply
-- Powered by a 9V battery or USB connection for portability.
+The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, streams **ADC-acquired flex sensor data**, and processes motor control via **PWM-regulated GPIOs**. A **Flutter mobile client** interfaces over **full-duplex WebSocket**, displaying an interactive neuro-motor training game while logging kinematic metrics locally using **Hive DB**.
 
 ---
 
-## Software Architecture
+## 🔩 Hardware Components
 
-### ESP32 Firmware
-- Developed using Arduino IDE.
-- Captures analog input from flex sensors.
-- Maps values to finger motion data and sends via WebSocket to the mobile app.
-- Activates vibration motors as required.
-
-### Mobile Application (Flutter)
-- Connects to ESP32 via WebSocket (using the ESP32-created Wi-Fi AP).
-- Displays a finger-based reaction game.
-- Logs sensor data, reaction times, and therapy sessions.
-- Analyzes patient progress through visual graphs and statistics.
+- **ESP32-WROOM-32 (Arduino)** – Dual-core MCU with integrated TCP/IP stack, ADC (12-bit), and PWM timers.
+- **Flex Sensors** – Variable resistors modeled as voltage dividers for finger-angle estimation.
+- **Vibration Motors (ERM)** – PWM-driven via NPN transistor switches; feedback for motor cortex activation.
+- **2N2222/BC547 + Flyback Diodes** – Ensure safe inductive switching under motor load.
+- **LM2596 Buck Converter** – Regulates 9V input down to 3.3V logic-compatible rails.
+- **9V Battery/USB** – Mobile power for untethered use.
 
 ---
 
-## Communication Protocol: WebSockets
+## 📱 Software Architecture
 
-WebSocket is used for continuous two-way communication between the ESP32 and the Flutter app. This ensures:
-- Low-latency data transmission
-- Real-time feedback and interaction
-- Reliable communication over Wi-Fi (ESP32 as Access Point)
+### Embedded Firmware (ESP32 / Arduino C)
+- Initializes SoftAP using `WiFi.softAP()`
+- Reads flex sensor voltages on ADC1/ADC2 channels.
+- Maps analog input to calibrated bend ranges.
+- Manages ERM motors using `analogWrite()` for PWM modulation.
+- Implements non-blocking WebSocket I/O via `WebSocketsServer`.
 
----
-
-## Game Mechanics and Patient Interaction
-
-- A game interface presents falling colored blocks, each representing a finger.
-- When a block appears, the corresponding vibration motor is triggered.
-- The patient must bend the appropriate finger to "remove" the block.
-- Correct movements are logged; delayed or missed responses increase accumulated blocks.
-- The game ends if too many blocks accumulate.
-
----
-
-## Data Analysis and Recovery Tracking
-
-- Finger movements and reaction times are recorded.
-- Session data is stored locally using the Hive database.
-- The application includes:
-  - Reaction time graphs per finger
-  - Usage statistics
-  - Progress tracking across sessions
-- This data can assist therapists in evaluating motor recovery over time.
+### Flutter App (Dart)
+- Connects to ESP32's Wi-Fi AP using `dart:io`.
+- WebSocket client for real-time data ingestion and actuation.
+- Gesture recognition mapped to a **reaction-based game UI**.
+- Stores time-series data (sensor + user response) via **Hive (NoSQL, local-first)**.
+- Provides in-app telemetry with `charts_flutter`.
 
 ---
 
-## Benefits for Stroke Patients
+## 🔁 Communication Protocol
 
-- Encourages motor re-learning through repetitive, interactive movements.
-- Provides instant tactile feedback to reinforce correct gestures.
-- Allows therapy to continue at home with minimal supervision.
-- Reduces dependence on hospital-based rehabilitation setups.
-- Tracks quantitative improvements, enabling data-driven therapy.
+- Uses **WebSocket over TCP/IP** for persistent, bidirectional transport.
+- Low-latency, full-duplex socket enables sensor-actuator loop closure <50ms.
+- Avoids BLE pairing complexity by leveraging ESP32 SoftAP and local IP (192.168.4.1).
 
 ---
 
-## Cost Comparison and Affordability
+## 🎮 Gameplay-Driven Therapy
 
-| Feature                       | Commercial Haptic Gloves          | Proposed System                |
-|------------------------------|----------------------------------|-------------------------------|
-| Approximate Cost             | ₹25,000 – ₹1,00,000+              | Under ₹1,000                  |
-| Design                       | Bulky, proprietary                | Lightweight, modular          |
-| Availability                 | Limited to clinics                | Usable at home                |
-| Feedback Mechanism           | Complex force feedback            | Simple vibration motors       |
-| Application Software         | Closed-source                     | Open-source Flutter application |
-
-The use of off-the-shelf components and open-source platforms ensures that the glove can be built and used affordably by rehabilitation centers, students, or hobbyists.
+- UI simulates finger-specific visual cues (colored stimuli).
+- Corresponding vibration motor triggers as haptic prompt.
+- Patient bends the correct finger; ADC input validates response.
+- Latency and accuracy metrics collected for each session.
+- Game difficulty dynamically adjusts to motion fidelity.
 
 ---
-## Setup Instructions
+
+## 📊 Rehab Analytics
+
+- Each session logs:
+  - Per-finger bend range
+  - Response latency
+  - Missed/incorrect gestures
+- Data persisted using Hive’s key-value object boxes.
+- Enables offline rehab tracking without cloud integration.
+- Visual analytics include:
+  - Reaction time histograms
+  - Finger-wise performance heatmaps
+  - Weekly recovery deltas
+
+---
+
+## 🩺 Clinical Relevance
+
+- Aims to stimulate **neuroplasticity** through high-repetition, gamified exercises.
+- Optimized for **home therapy** in post-stroke patients with limited access to in-clinic rehab.
+- Supports **low-cost deployment** using open hardware + software (₹<1000 per unit).
+- Promotes use in **physiotherapy labs**, **rural rehab camps**, and **assistive tech R&D**.
+
+---
+
+## 🛠 Setup Instructions
 
 ### ESP32 Firmware
 
-1. Open `ESP32_Code/haptic_glove.ino` in Arduino IDE.
-2. Install libraries: `WiFi.h`, `WebSocketsServer.h`.
-3. Upload code to ESP32.
-4. Join `ESP32_Game` Wi-Fi network.
+1. Open `ESP32_Code/haptic_glove.ino` in **Arduino IDE**
+2. Install dependencies: `WebSocketsServer`, `WiFi`.
+3. Connect ESP32 over USB, select correct COM port.
+4. Upload firmware and monitor via serial.
 
 ### Flutter App
 
-1. Install Flutter SDK.
-2. In `Flutter_App/`, run:
-    ```bash
-    flutter pub get
-    flutter run
-    ```
+```bash
+cd Flutter_App
+flutter pub get
+flutter run
+```
+Connect to `ESP32_Game` Wi-Fi → Navigate to `192.168.4.1`
 
 ---
 
-## References
+## 👨‍🔬 References
 
-- Dahiya, R. S., Valle, M. (2012). *Robotic Tactile Sensing*.
-- He, J., et al. (2017). *Haptic feedback for rehabilitation*.
-- Lane, J. C., et al. (2018). *Low-cost glove for stroke rehabilitation*.
-- Espressif Systems. *ESP32 Technical Reference Manual*.
-- TensorFlow Lite for Microcontrollers.
+- Espressif: *ESP32 Technical Reference Manual*  
+- JNER: *Gamified Rehab Post-Stroke – 2017*  
+- Springer: *Tactile Sensing Technologies*  
+- IEEE Access: *Low-cost Smart Wearables for Neuro Recovery*  
+- TensorFlow Micro: *On-device ML for Motor Control*
 
 ---
 
-## Project Team
+## 👥 Authors & Contributors
 
-- Abraham Jeyakumar
-- Aravind Sunil
-- Jostin Jaison
-- Keerthana N
+- Abraham Jeyakumar  
+- Aravind Sunil  
+- Jostin Jaison  
+- Keerthana N  
 
 **Guide**: Prof. Sindhu Krishnan  
-**Dept**: Electronics & Communication Engg  
-**Institution**: NSS College of Engineering, Palakkad
+**Dept**: ECE, NSS College of Engineering, Palakkad
 
 ---
 
-## License
+## 📄 License
 
-For educational use. Credit original authors when adapting.
+© 2024. For research and academic purposes only.  
+Redistribution or reuse requires attribution and prior approval from the authors.
