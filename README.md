@@ -140,5 +140,5 @@ Connect to `ESP32_Game` Wi-Fi → Navigate to `192.168.4.1`
 
 ## 📄 License
 
-© 2024. For research and academic purposes only.  
+© 2025. For research and academic purposes only.  
 Redistribution or reuse requires attribution and prior approval from the authors.
