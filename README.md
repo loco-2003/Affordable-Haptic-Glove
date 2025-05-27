@@ -81,6 +81,21 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
+
+## Cost Comparison and Affordability
+
+| Feature                       | Commercial Haptic Gloves          | Proposed System                |
+|------------------------------|----------------------------------|-------------------------------|
+| Approximate Cost             | ₹25,000 – ₹1,00,000+              | Under ₹1,000                  |
+| Design                       | Bulky, proprietary                | Lightweight, modular          |
+| Availability                 | Limited to clinics                | Usable at home                |
+| Feedback Mechanism           | Complex force feedback            | Simple vibration motors       |
+| Application Software         | Closed-source                     | Open-source Flutter application |
+
+The use of off-the-shelf components and open-source platforms ensures that the glove can be built and used affordably by rehabilitation centers, students, or hobbyists.
+
+
+---
 ## 🛠 Setup Instructions
 
 ### ESP32 Firmware
