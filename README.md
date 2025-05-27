@@ -4,13 +4,13 @@ This repository presents a cost-efficient, wearable neurorehabilitation system i
 
 ---
 
-## 🧠 System Architecture
+## System Architecture
 
 The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, streams **ADC-acquired flex sensor data**, and processes motor control via **PWM-regulated GPIOs**. A **Flutter mobile client** interfaces over **full-duplex WebSocket**, displaying an interactive neuro-motor training game while logging kinematic metrics locally using **Hive DB**.
 
 ---
 
-## 🔩 Hardware Components
+## Hardware Components
 
 - **ESP32-WROOM-32 (Arduino)** – Dual-core MCU with integrated TCP/IP stack, ADC (12-bit), and PWM timers.
 - **Flex Sensors** – Variable resistors modeled as voltage dividers for finger-angle estimation.
@@ -21,7 +21,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
-## 📱 Software Architecture
+## Software Architecture
 
 ### Embedded Firmware (ESP32 / Arduino C)
 - Initializes SoftAP using `WiFi.softAP()`
@@ -39,7 +39,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
-## 🔁 Communication Protocol
+## Communication Protocol
 
 - Uses **WebSocket over TCP/IP** for persistent, bidirectional transport.
 - Low-latency, full-duplex socket enables sensor-actuator loop closure <50ms.
@@ -47,7 +47,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
-## 🎮 Gameplay-Driven Therapy
+## Gameplay-Driven Therapy
 
 - UI simulates finger-specific visual cues (colored stimuli).
 - Corresponding vibration motor triggers as haptic prompt.
@@ -57,7 +57,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
-## 📊 Rehab Analytics
+## Rehab Analytics
 
 - Each session logs:
   - Per-finger bend range
@@ -72,7 +72,7 @@ The system uses **ESP32 in SoftAP mode** to form a standalone Wi-Fi network, str
 
 ---
 
-## 🩺 Clinical Relevance
+## Clinical Relevance
 
 - Aims to stimulate **neuroplasticity** through high-repetition, gamified exercises.
 - Optimized for **home therapy** in post-stroke patients with limited access to in-clinic rehab.
