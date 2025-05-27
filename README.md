@@ -1,67 +1,112 @@
 # Affordable Haptic Glove for Stroke Rehabilitation
 
 This repository details a low-cost, wearable haptic glove system using ESP32, flex sensors, vibration motors, and a Flutter-based game interface. Designed for stroke rehabilitation, it encourages therapeutic finger movements through interactive gameplay.
-
 ---
 
 ## System Overview
 
-- **Detection**: Flex sensors on fingers capture movement.
-- **Feedback**: Vibration motors provide haptic cues.
-- **Controller**: ESP32 processes sensor data and controls feedback.
-- **Communication**: Mobile app connects over Wi-Fi using WebSockets for real-time interaction.
+The haptic glove is designed to detect finger movements using flex sensors and provide real-time haptic feedback using vibration motors. The ESP32 microcontroller collects sensor data and communicates with a mobile application over Wi-Fi using WebSockets. The mobile application presents a game-based interface to motivate consistent therapy and monitor patient progress.
 
 ---
 
 ## Hardware Components
 
-- **ESP32 Microcontroller**: Dual-core MCU with Wi-Fi/Bluetooth.
-- **Flex Sensors**: Analog input for each finger.
-- **Vibration Motors**: Haptic feedback via digital pins.
-- **Transistors/Diodes**: Motor control and circuit protection.
-- **Buck Converter**: Safe voltage supply.
-- **Power**: 9V battery or USB.
+### 1. ESP32 Microcontroller
+- Dual-core microcontroller with built-in Wi-Fi and Bluetooth.
+- Acts as the central unit for processing flex sensor input and controlling vibration feedback.
+- Enables wireless communication with the mobile application.
+
+### 2. Flex Sensors
+- Placed on fingers to detect bending movements.
+- Output is an analog signal proportional to the bending angle.
+- Data is digitized using the ESP32's ADC channels.
+
+### 3. Vibration Motors
+- Provide haptic feedback corresponding to user actions.
+- Controlled via digital output pins using transistors for switching.
+
+### 4. Transistors and Diodes
+- Transistors act as electronic switches to control motors.
+- Diodes protect the circuit from voltage spikes (back EMF).
+
+### 5. Buck Converter
+- Reduces the battery voltage to a level safe for the ESP32 and other components.
+
+### 6. Power Supply
+- Powered by a 9V battery or USB connection for portability.
 
 ---
 
-
-## Software Architecture & Benefits
+## Software Architecture
 
 ### ESP32 Firmware
-- Arduino-based; reads flex sensors, sends data & controls vibration motors via WebSocket.
+- Developed using Arduino IDE.
+- Captures analog input from flex sensors.
+- Maps values to finger motion data and sends via WebSocket to the mobile app.
+- Activates vibration motors as required.
 
-### Flutter App
-- Connects to ESP32 over Wi-Fi.
-- Runs finger reaction game, logs movements, reaction times, and sessions.
-- Shows progress with graphs and stats (Hive database).
-
-### Communication
-- WebSocket ensures real-time, low-latency, reliable data exchange.
-
-### Game & Tracking
-- Players respond to finger cues; game actions vibrate the finger.
-- Logs accuracy, reaction times, and session stats.
-- Progress graphs help therapists track recovery.
-
-### Patient Benefits
-- Fun, interactive rehab at home.
-- Instant tactile feedback.
-- Open-source, affordable, and data-driven progress tracking.
+### Mobile Application (Flutter)
+- Connects to ESP32 via WebSocket (using the ESP32-created Wi-Fi AP).
+- Displays a finger-based reaction game.
+- Logs sensor data, reaction times, and therapy sessions.
+- Analyzes patient progress through visual graphs and statistics.
 
 ---
 
-## Cost Comparison
+## Communication Protocol: WebSockets
 
-| Feature                | Commercial Gloves     | This Project            |
-|------------------------|----------------------|-------------------------|
-| Price                  | ₹25,000 – ₹1,00,000+ | Under ₹1,000            |
-| Design                 | Bulky/proprietary    | Lightweight/modular     |
-| Availability           | Clinics only         | Home use                |
-| Feedback               | Force feedback       | Vibration motors        |
-| App                    | Closed-source        | Open-source Flutter     |
+WebSocket is used for continuous two-way communication between the ESP32 and the Flutter app. This ensures:
+- Low-latency data transmission
+- Real-time feedback and interaction
+- Reliable communication over Wi-Fi (ESP32 as Access Point)
 
 ---
 
+## Game Mechanics and Patient Interaction
+
+- A game interface presents falling colored blocks, each representing a finger.
+- When a block appears, the corresponding vibration motor is triggered.
+- The patient must bend the appropriate finger to "remove" the block.
+- Correct movements are logged; delayed or missed responses increase accumulated blocks.
+- The game ends if too many blocks accumulate.
+
+---
+
+## Data Analysis and Recovery Tracking
+
+- Finger movements and reaction times are recorded.
+- Session data is stored locally using the Hive database.
+- The application includes:
+  - Reaction time graphs per finger
+  - Usage statistics
+  - Progress tracking across sessions
+- This data can assist therapists in evaluating motor recovery over time.
+
+---
+
+## Benefits for Stroke Patients
+
+- Encourages motor re-learning through repetitive, interactive movements.
+- Provides instant tactile feedback to reinforce correct gestures.
+- Allows therapy to continue at home with minimal supervision.
+- Reduces dependence on hospital-based rehabilitation setups.
+- Tracks quantitative improvements, enabling data-driven therapy.
+
+---
+
+## Cost Comparison and Affordability
+
+| Feature                       | Commercial Haptic Gloves          | Proposed System                |
+|------------------------------|----------------------------------|-------------------------------|
+| Approximate Cost             | ₹25,000 – ₹1,00,000+              | Under ₹1,000                  |
+| Design                       | Bulky, proprietary                | Lightweight, modular          |
+| Availability                 | Limited to clinics                | Usable at home                |
+| Feedback Mechanism           | Complex force feedback            | Simple vibration motors       |
+| Application Software         | Closed-source                     | Open-source Flutter application |
+
+The use of off-the-shelf components and open-source platforms ensures that the glove can be built and used affordably by rehabilitation centers, students, or hobbyists.
+
+---
 ## Setup Instructions
 
 ### ESP32 Firmware
