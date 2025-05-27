@@ -1,6 +1,7 @@
 # Affordable Haptic Glove for Stroke Rehabilitation
 
 This repository details a low-cost, wearable haptic glove system using ESP32, flex sensors, vibration motors, and a Flutter-based game interface. Designed for stroke rehabilitation, it encourages therapeutic finger movements through interactive gameplay.
+
 ---
 
 ## System Overview
